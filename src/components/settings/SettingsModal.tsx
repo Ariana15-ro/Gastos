@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Download, Upload, RotateCcw, Trash2, Check, X, ShieldAlert, Sparkles, HelpCircle } from 'lucide-react';
+import { Settings, Download, Upload, RotateCcw, Trash2, Check, X, ShieldAlert, Sparkles, HelpCircle, Sun, Moon } from 'lucide-react';
 import { UserSettings, Category, Transaction, Budget } from '../../types';
 import { exportBackupJSON, resetToDemoData, clearAllData } from '../../lib/storage';
 import { useToast } from '../ui/Toast';
@@ -40,6 +40,7 @@ export function SettingsModal({
   const [currency, setCurrency] = useState(settings.currency);
   const [userName, setUserName] = useState(settings.userName);
   const [savingsGoal, setSavingsGoal] = useState(settings.monthlySavingsGoal.toString());
+  const [theme, setTheme] = useState<'light' | 'dark'>(settings.theme === 'light' ? 'light' : 'dark');
   const [confirmReset, setConfirmReset] = useState(false);
 
   if (!isOpen) return null;
@@ -52,7 +53,7 @@ export function SettingsModal({
       currencySymbol: currObj.symbol,
       userName: userName.trim() || 'Usuario FinTrack',
       monthlySavingsGoal: parseFloat(savingsGoal) || 500,
-      theme: settings.theme || 'dark',
+      theme: theme,
     };
     onUpdateSettings(newSettings);
     showToast('Ajustes guardados correctamente', 'success');
@@ -176,6 +177,39 @@ export function SettingsModal({
               onChange={(e) => setSavingsGoal(e.target.value)}
               className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500"
             />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 mb-1">
+              Tema de la Aplicación
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setTheme('light')}
+                className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border text-xs font-bold transition-all ${
+                  theme === 'light'
+                    ? 'border-indigo-600 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400'
+                    : 'border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800'
+                }`}
+              >
+                <Sun className="w-4 h-4 text-amber-500" />
+                <span>Modo Claro</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTheme('dark')}
+                className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border text-xs font-bold transition-all ${
+                  theme === 'dark'
+                    ? 'border-indigo-600 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400'
+                    : 'border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800'
+                }`}
+              >
+                <Moon className="w-4 h-4 text-indigo-500" />
+                <span>Modo Oscuro</span>
+              </button>
+            </div>
           </div>
 
           <button
