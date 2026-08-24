@@ -1,0 +1,6 @@
+{
+  "name": "FinTrack - Control de Gastos y Presupuestos",
+  "description": "Aplicación web de finanzas personales para gestión de ingresos, gastos, presupuestos por categoría, análisis con gráficos interactivos y registro rápido.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
